@@ -2,15 +2,15 @@ programa declararegistro
 def
     inteiro a
     logico b 
-fimdef c
+fimdef tipo1
 
 def
-    registro c x 
+    registro tipo1 x 
     inteiro y
-fimdef d
+fimdef tipo2
 
 inteiro x 
-registro d y 
+registro tipo2 y 
 logico z
 
 inicio 

@@ -117,3 +117,26 @@ void testaTipo(int tipo1, int tipo2, int ret){
         yyerror("Incompatibilidade de tipo");
     empilha(ret);
 }
+
+void cadastraTipo(int tipo) {
+    switch (tipo) {
+        case INT:
+            strcpy(elemTab.id, "inteiro");
+            elemTab.end = -1;
+            elemTab.tip = tipo;
+            insereSimbolo(elemTab);
+        break;
+        case LOG:
+            strcpy(elemTab.id, "logico");
+            elemTab.end = -1;
+            elemTab.tip = tipo;
+            insereSimbolo(elemTab);
+        break;
+        default:
+            strcpy(elemTab.id, atomo);
+            elemTab.end = -1;
+            elemTab.tip = tipo;
+            insereSimbolo(elemTab);
+
+    }
+}

@@ -96,7 +96,11 @@ declaracao_variaveis
 
 define_registro
     : 
-    | T_DEF lista_campos T_FIMDEF T_IDENTIF define_registro
+    | T_DEF lista_campos T_FIMDEF T_IDENTIF 
+        {
+            cadastraTipo(REG);
+        }
+    define_registro
     ;
 
 /* declaracao_campos
@@ -120,9 +124,8 @@ lista_variaveis
             strcpy(elemTab.id, atomo);
             elemTab.end = contaVar;
             elemTab.tip = tipo;
-            insereSimbolo (elemTab); 
+            insereSimbolo(elemTab); 
             contaVar ++;
-            
         }
     | T_IDENTIF
         {
@@ -133,6 +136,11 @@ lista_variaveis
             contaVar ++;
         }
     ;
+
+/* declaracao_campos
+    : tipo lista_campos declaracao_campos
+    | tipo lista_campos
+    ; */
 
 lista_comandos
     : /* vazio*/
@@ -320,6 +328,9 @@ termo
 /* Implementação das funções*/
 /* Função que o sintático gera*/
 int main (int argc, char *argv[]) { 
+    cadastraTipo(INT);  // tentando pré-cadastro but it doesnt feel right
+    cadastraTipo(LOG);
+
     char *p, nameIn[100], nameOut[100];
     argv++; // pular para o proximo nome, pq o primeiro nome eh o do executavel, dpois eh os param
     if(argc < 2){ // se só tiver o nome do executavel, sem os parametros
