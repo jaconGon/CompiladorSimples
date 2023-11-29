@@ -13,19 +13,34 @@ enum
     REG
 };
 
+char nomeTipo[3][4] = {"INT", "LOG", "REG"};
 
 #define TAM_TAB 100
+#define TAM_REG 50
+
+struct campoRegistro {
+    char nome[100];
+    int tipo;
+    int pos;      // posição do tipo na tabela de símbolos
+    int desl;     // deslocamento a partir da pos inicial do registro para o campo na memória
+    int tam;      // tamanho - posições que ocupa na memória
+    struct campoRegistro * prox; // encadeamento para o próximo campo no registro
+} registro[TAM_REG], campoReg;
+
+
+// TODO: inserir campo na lista
+// TODO: percorrer a lista p/ mostrar os campos/ fazer manipulações 
 
 struct elemTabSimbolos {
     char id[100]; // nome do indentificador
     int end;      // endereco 
     int tip;      // tipo
-    int tam;      // tamanho
-    int pos;      // talvez *?
-
+    int tam;      // tamanho - posições que ocupa na memória
+    int pos;      // posição do tipo na tabela de símbolos
 } tabSim[TAM_TAB], elemTab;
 
-int posTab; // inidica a próxima posicao livre para inserir
+
+int posTab; // indica a próxima posicao livre para inserir
 
 // Rotinas
 int buscaSimbolo (char *s){
@@ -61,21 +76,10 @@ void mostraTabela(){
     for(int i = 0 ; i < 70 ; i++)
         printf("-");
     for(int i = 0; i < posTab ; i++) {
-        char tipo[4];
-        switch (tabSim[i].tip) {
-            case INT :
-                strcpy(tipo, "INT");
-                break;
-            case LOG :
-                strcpy(tipo, "LOG");
-                break;
-            default :
-                strcpy(tipo, "REG");
-        }
         printf("\n%30s | %3d | %s | %3d | %3d | %s",
             tabSim[i].id,
             tabSim[i].end,
-            tipo,
+            nomeTipo[tabSim[i].tip],
             tabSim[i].tam,
             tabSim[i].pos,
             ""
@@ -118,25 +122,30 @@ void testaTipo(int tipo1, int tipo2, int ret){
     empilha(ret);
 }
 
+/*
+* Cadastra tipos pré-definidos e definidos
+*/
 void cadastraTipo(int tipo) {
     switch (tipo) {
         case INT:
             strcpy(elemTab.id, "inteiro");
             elemTab.end = -1;
             elemTab.tip = tipo;
+            elemTab.tam = 1;
             insereSimbolo(elemTab);
         break;
         case LOG:
             strcpy(elemTab.id, "logico");
             elemTab.end = -1;
             elemTab.tip = tipo;
+            elemTab.tam = 1;
             insereSimbolo(elemTab);
         break;
         default:
             strcpy(elemTab.id, atomo);
             elemTab.end = -1;
             elemTab.tip = tipo;
+            elemTab.tam = 0;
             insereSimbolo(elemTab);
-
     }
 }

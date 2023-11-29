@@ -49,7 +49,7 @@ nao                 return T_NAO;
 "("                 return T_ABRE;
 ")"                 return T_FECHA;
 
-registro            return T_REG;
+registro            return T_REGISTRO;
 inteiro             return T_INTEIRO;
 logico              return T_LOGICO;
 V                   return T_V;
@@ -65,6 +65,11 @@ fimdef              return T_FIMDEF;
 <coment>\n          numLinha++;
 
 {identificador}     { strcpy(atomo, yytext); return T_IDENTIF; } /* pega o id no yytext e copia para atomo*/
+{identificador}"."  { 
+                        strcpy(atomo, yytext); 
+                        atomo[strlen(atomo)-1] = 0; /* apagando o pontinho do nome*/
+                        return T_IDPONTO; 
+                    } /* id seguido de ponto*/
 {numero}            { strcpy(atomo, yytext); return T_NUMERO; } 
 {espaco}            /* nada */ 
 {novalinha}         numLinha++;/*contar pra poder identificar erro*/

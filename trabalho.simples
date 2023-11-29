@@ -10,8 +10,10 @@ def
 fimdef tipo2
 
 inteiro x 
-registro tipo2 y 
+registro tipo2 reg1 
 logico z
 
 inicio 
+    escreva reg1.x.a
+    escreva x
 fimprograma
