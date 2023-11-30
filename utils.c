@@ -37,6 +37,7 @@ struct elemTabSimbolos {
     int tip;      // tipo
     int tam;      // tamanho - posições que ocupa na memória
     int pos;      // posição do tipo na tabela de símbolos
+    struct campoRegistro * registro; // aponta para um registro (se deus quiser)
 } tabSim[TAM_TAB], elemTab;
 
 
@@ -125,13 +126,14 @@ void testaTipo(int tipo1, int tipo2, int ret){
 /*
 * Cadastra tipos pré-definidos e definidos
 */
-void cadastraTipo(int tipo) {
+void cadastraTipo(int tipo, int pos) {
     switch (tipo) {
         case INT:
             strcpy(elemTab.id, "inteiro");
             elemTab.end = -1;
             elemTab.tip = tipo;
             elemTab.tam = 1;
+            elemTab.pos = pos;
             insereSimbolo(elemTab);
         break;
         case LOG:
@@ -139,6 +141,7 @@ void cadastraTipo(int tipo) {
             elemTab.end = -1;
             elemTab.tip = tipo;
             elemTab.tam = 1;
+            elemTab.pos = pos;
             insereSimbolo(elemTab);
         break;
         default:
@@ -146,6 +149,7 @@ void cadastraTipo(int tipo) {
             elemTab.end = -1;
             elemTab.tip = tipo;
             elemTab.tam = 0;
+            elemTab.pos = pos;
             insereSimbolo(elemTab);
     }
 }

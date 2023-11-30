@@ -1026,7 +1026,7 @@ YY_RULE_SETUP
                         strcpy(atomo, yytext); 
                         atomo[strlen(atomo)-1] = 0; /* apagando o pontinho do nome*/
                         return T_IDPONTO; 
-                    }
+                    } /* id seguido de ponto*/
 	YY_BREAK
 case 40:
 YY_RULE_SETUP

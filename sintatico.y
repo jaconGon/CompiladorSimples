@@ -14,6 +14,8 @@ int rotulo = 0;
 int ehRegistro = 0;
 int tipo;
 int tam;
+int contaCampo = 0;
+int pos = 0;
 %}
 
 %start programa
@@ -105,7 +107,7 @@ definicoes
 define
     : T_DEF definicao_campos T_FIMDEF T_IDENTIF
         {
-            cadastraTipo(REG);
+            cadastraTipo(REG,pos++);
         }
     ;
 
@@ -116,6 +118,13 @@ definicao_campos
 
 lista_campos 
     : lista_campos T_IDENTIF
+    {
+        strcpy(campoReg.nome, atomo);
+        campoReg.tipo = tipo;
+        // elemTab.tam = tam;
+        // insereSimbolo(elemTab); 
+        // contaVar ++;
+    }
     | T_IDENTIF
     ;
 
@@ -145,6 +154,10 @@ lista_variaveis
             elemTab.end = contaVar;
             elemTab.tip = tipo;
             elemTab.tam = tam;
+            for(int i = 0; i < pos; i ++) {
+                if(tabSim[i].tip == tipo) 
+                    elemTab.pos = tabSim[i].pos;
+            }
             insereSimbolo(elemTab); 
             contaVar ++;
         }
@@ -154,6 +167,10 @@ lista_variaveis
             elemTab.end = contaVar;
             elemTab.tip = tipo;
             elemTab.tam = tam;
+            for(int i = 0; i < pos; i ++) {
+                if(tabSim[i].tip == tipo) 
+                    elemTab.pos = tabSim[i].pos;
+            }
             insereSimbolo (elemTab); 
             contaVar ++;
         }
@@ -361,8 +378,8 @@ termo
 /* Implementação das funções*/
 /* Função que o sintático gera*/
 int main (int argc, char *argv[]) { 
-    cadastraTipo(INT);  // tentando pré-cadastro but it doesnt feel right
-    cadastraTipo(LOG);
+    cadastraTipo(INT, pos++);  
+    cadastraTipo(LOG, pos++);
 
     char *p, nameIn[100], nameOut[100];
     argv++; // pular para o proximo nome, pq o primeiro nome eh o do executavel, dpois eh os param
