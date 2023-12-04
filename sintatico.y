@@ -15,7 +15,9 @@ int ehRegistro = 0;
 int tipo;
 int tam;
 int contaCampo = 0;
+int contaTamReg = 0;
 int pos = 0;
+int cam = 0;
 %}
 
 %start programa
@@ -73,7 +75,6 @@ programa
             empilha (contaVar);
             if(contaVar)
                 fprintf(yyout, "\tAMEM\t%d\n", contaVar); 
-            
         }
      T_INICIO lista_comandos T_FIM
         { 
@@ -105,9 +106,14 @@ definicoes
     ;
 
 define
-    : T_DEF definicao_campos T_FIMDEF T_IDENTIF
+    : T_DEF 
         {
-            cadastraTipo(REG,pos++);
+            //inicia a lista
+
+        }
+    definicao_campos T_FIMDEF T_IDENTIF
+        {
+            
         }
     ;
 
@@ -119,13 +125,22 @@ definicao_campos
 lista_campos 
     : lista_campos T_IDENTIF
     {
-        strcpy(campoReg.nome, atomo);
-        campoReg.tipo = tipo;
-        // elemTab.tam = tam;
-        // insereSimbolo(elemTab); 
-        // contaVar ++;
+        // printf("\n*** entrou1 ***!");
+        // strcpy(campoReg.nome, atomo);
+        // campoReg.tipo = tipo;
+        // for(int i = 0; i < pos; i++) {
+        //     if(tabSim[i].tip == tipo)
+        //         campoReg.pos = tabSim[i].pos;
+        // }
+        // campoReg.tam = tam;
+        // contaTamReg += campoReg.tam;
+        // insereCampo(campoReg); 
+        // campoReg.desl = contaCampo;
     }
     | T_IDENTIF
+    {
+       
+    }
     ;
 
 tipo
@@ -154,10 +169,6 @@ lista_variaveis
             elemTab.end = contaVar;
             elemTab.tip = tipo;
             elemTab.tam = tam;
-            for(int i = 0; i < pos; i ++) {
-                if(tabSim[i].tip == tipo) 
-                    elemTab.pos = tabSim[i].pos;
-            }
             insereSimbolo(elemTab); 
             contaVar ++;
         }
@@ -167,19 +178,10 @@ lista_variaveis
             elemTab.end = contaVar;
             elemTab.tip = tipo;
             elemTab.tam = tam;
-            for(int i = 0; i < pos; i ++) {
-                if(tabSim[i].tip == tipo) 
-                    elemTab.pos = tabSim[i].pos;
-            }
             insereSimbolo (elemTab); 
             contaVar ++;
         }
     ;
-
-/* declaracao_campos
-    : tipo lista_campos declaracao_campos
-    | tipo lista_campos
-    ; */
 
 lista_comandos
     : /* vazio*/

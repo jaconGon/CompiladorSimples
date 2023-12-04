@@ -27,7 +27,6 @@ struct campoRegistro {
     struct campoRegistro * prox; // encadeamento para o próximo campo no registro
 } registro[TAM_REG], campoReg;
 
-
 // TODO: inserir campo na lista
 // TODO: percorrer a lista p/ mostrar os campos/ fazer manipulações 
 
@@ -35,13 +34,13 @@ struct elemTabSimbolos {
     char id[100]; // nome do indentificador
     int end;      // endereco 
     int tip;      // tipo
-    int tam;      // tamanho - posições que ocupa na memória
+    int tam;      // tamanho: posições que ocupa na memória
     int pos;      // posição do tipo na tabela de símbolos
     struct campoRegistro * registro; // aponta para um registro (se deus quiser)
 } tabSim[TAM_TAB], elemTab;
 
-
 int posTab; // indica a próxima posicao livre para inserir
+int contaReg; 
 
 // Rotinas
 int buscaSimbolo (char *s){
@@ -71,7 +70,7 @@ void insereSimbolo (struct elemTabSimbolos elem){
 }
 
 void mostraTabela(){
-    puts("Tabela de simbolos");
+    puts("\n\nTabela de simbolos");
     puts("------------------");
     printf("%30s | %s | %s | %s | %s | %s\n", "ID" , "END", "TIP", "TAM", "POS", "CAMPOS");
     for(int i = 0 ; i < 70 ; i++)
@@ -90,6 +89,28 @@ void mostraTabela(){
     // for(int i = 0 ; i < 70 ; i++)
     //     printf("-");
     // puts("");
+}
+
+void insereCampo (struct campoRegistro campo, struct campoRegistro cabeca){
+    struct campoRegistro novoCampo = malloc(sizeof(struct campoRegistro)); // Aloca memória para o novo campo
+    novoCampo = campo;
+    novoCampo->prox = NULL;
+
+    struct campoRegistro *temp = cabeca;
+    while (temp->prox != NULL) {
+        temp = temp->prox; // Percorre a lista até encontrar o último campo
+    }
+
+    temp->prox = novoCampo; // Insere o novo campo após o último campo
+}
+
+void mostraRegistro(){
+    puts("\n\nRegistros");
+    puts("------------------");
+    printf("%30s | %s | %s | %s | %s | %s\n", "NOME" , "TIP", "POS", "DES", "TAM", "PROX");
+    for(int i = 0 ; i < 70 ; i++)
+        printf("-");
+
 }
 
 // TODO: Retirar símbolos da tabela, descadastrar o nome da tabela
